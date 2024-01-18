@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"nombre\": \"Juan Osorio\",\r\n  \"genero\": \"MASCULINO\", // MASCULINO - FEMENINO - OTRO //\r\n  \"edad\": 58,\r\n  \"identificacion\": \"1597\",\r\n  \"direccion\": \"13 de junio y Equinoccial\",\r\n  \"telefono\": \"098874587\",\r\n  \"password\": \"1597\", \r\n  \"estado\": \"TRUE\"  // TRUE - FALSE //\r\n}",
+					"raw": "{\r\n  \"nombre\": \"Jose Lema\",\r\n  \"genero\": \"MASCULINO\", // MASCULINO - FEMENINO - OTRO //\r\n  \"edad\": 27,\r\n  \"identificacion\": \"1245\",\r\n  \"direccion\": \"Otavalo sn y principal\",\r\n  \"telefono\": \"098254785\",\r\n  \"password\": \"1234\", \r\n  \"estado\": \"TRUE\"  // TRUE - FALSE //\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -156,6 +156,12 @@
 		{
 			"key": "URL",
 			"value": "http://localhost:8081",
+			"type": "string",
+			"disabled": true
+		},
+		{
+			"key": "URL",
+			"value": "http://localhost:9090/ms-clientes",
 			"type": "string"
 		}
 	]

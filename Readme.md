@@ -45,6 +45,8 @@ Servicios con lo que se dispone en el docker-compose.yml
 - **phpmyadmin**
   - PMA_HOST: mysql
   - MYSQL_ROOT_PASSWORD: dbpass
+- **ms-api-gateway**
+  - EUREKA_SERVER: http://localhost:8761/eureka
 - **ms-cliente-persona**
   - MYSQL_SERVER_IP: mysql 
   - MYSQL_SERVER_PORT: 3306 
@@ -54,6 +56,7 @@ Servicios con lo que se dispone en el docker-compose.yml
   - RABBITMQ_PORT: 5672 
   - RABBITMQ_USER: guest 
   - RABBITMQ_PASSWORD: guest
+  - EUREKA_SERVER: http://localhost:8761/eureka
 - **ms-cuenta-movimiento**
   - MYSQL_SERVER_IP: mysql 
   - MYSQL_SERVER_PORT: 3306 
@@ -63,7 +66,8 @@ Servicios con lo que se dispone en el docker-compose.yml
   - RABBITMQ_USER: guest 
   - RABBITMQ_PASSWORD: guest
   - REST_CLIENTE_URL: http://localhost:8081/clientes (Comunicación sincrona con el ms-cliente-persona)
-
+  - EUREKA_SERVER: http://localhost:8761/eureka
+  
 Para levantar las ejecucion de los contenedores mediante docker compose, se debe ubicar en el directorio **devsu-docker** de este repositorio y ejecutar el comando
 ```shell
 docker compose up -d
