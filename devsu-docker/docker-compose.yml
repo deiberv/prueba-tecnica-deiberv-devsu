@@ -1,0 +1,100 @@
+version: '3.4'
+
+networks:
+  devsu-network:
+    name: deiberv-network
+
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - devsu-network
+  sonarqube:
+    image: sonarqube:8.9-community
+    ports:
+      - 9001:9000
+      - 9092:9092
+    volumes:
+      - ./devsu-data/sonarqube/data:/opt/sonarqube/data
+      - ./devsu-data/sonarqube/logs:/opt/sonarqube/logs
+      - ./devsu-data/sonarqube/extensions:/opt/sonarqube/extensions
+  mysql:
+    image: mysql:8.0.34
+    environment:
+      MYSQL_DATABASE: api_clientes
+      MYSQL_PASSWORD: dbpass
+      MYSQL_ROOT_PASSWORD: dbpass
+    volumes:
+      - ./devsu-data/mysql:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - devsu-network
+  phpmyadmin:
+    depends_on:
+      - mysql
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8090:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: dbpass
+    links:
+      - mysql
+    networks:
+      - devsu-network
+  ms-cliente-persona:
+    build:
+      context: ./ms-cliente-persona
+    depends_on:
+      - mysql
+      - rabbitmq
+    container_name: ms-cliente-persona
+    environment:
+      MYSQL_SERVER_IP: mysql
+      MYSQL_SERVER_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: dbpass
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+    ports:
+      - "8081:8081"
+    restart: always
+    links:
+      - mysql
+      - rabbitmq
+    networks:
+      - devsu-network
+  ms-cuenta-movimiento:
+    build:
+      context: ./ms-cuenta-movimiento
+    depends_on:
+      - mysql
+      - rabbitmq
+    container_name: ms-cuenta-movimiento
+    environment:
+      MYSQL_SERVER_IP: mysql
+      MYSQL_SERVER_PORT: 3306
+      MYSQL_USER: root
+      MYSQL_PASSWORD: dbpass
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USER: guest
+      RABBITMQ_PASSWORD: guest
+      REST_CLIENTE_URL: http://ms-cliente-persona:8001/clientes
+    ports:
+      - "8082:8082"
+    restart: always
+    links:
+      - mysql
+      - rabbitmq
+    networks:
+      - devsu-network
+ 

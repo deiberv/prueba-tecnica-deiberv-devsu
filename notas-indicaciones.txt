@@ -1,0 +1,143 @@
+1. Clientes
+{
+  "nombre": "Jose Lema",
+  "genero": "MASCULINO", // MASCULINO - FEMENINO - OTRO //
+  "edad": 27,
+  "identificacion": "1245",
+  "direccion": "Otavalo sn y principal",
+  "telefono": "098254785",
+  "password": "1234", 
+  "estado": "TRUE"  // TRUE - FALSE //
+},
+
+{
+  "nombre": "Marianela Montalvo",
+  "genero": "FEMENINO", // MASCULINO - FEMENINO - OTRO //
+  "edad": 32,
+  "identificacion": "5678",
+  "direccion": "Amazonas y NNUU",
+  "telefono": "097548965",
+  "password": "5678", 
+  "estado": "TRUE"  // TRUE - FALSE //
+}
+
+{
+  "nombre": "Juan Osorio",
+  "genero": "MASCULINO", // MASCULINO - FEMENINO - OTRO //
+  "edad": 58,
+  "identificacion": "1597",
+  "direccion": "13 de junio y Equinoccial",
+  "telefono": "098874587",
+  "password": "1597", 
+  "estado": "TRUE"  // TRUE - FALSE //
+}
+
+
+2. Cuentas de usuarios
+{
+  "numeroCuenta": "478758",
+  "tipoCuenta": "AHORRO", // AHORRO - CORRIENTE //
+  "saldoInicial": 2000,
+  "estado": "True",  // TRUE - FALSE //
+  "cliente": {
+    "clienteId": 1,
+    "nombre": "Jose Lema"
+  }
+}
+
+{
+  "numeroCuenta": "225487",
+  "tipoCuenta": "CORRIENTE", // AHORRO - CORRIENTE //
+  "saldoInicial": 100,
+  "estado": "True",  // TRUE - FALSE //
+  "cliente": {
+    "clienteId": 2,
+    "nombre": "Marianela Montalvo"
+  }
+}
+
+{
+  "numeroCuenta": "495878",
+  "tipoCuenta": "AHORRO", // AHORRO - CORRIENTE //
+  "saldoInicial": 0,
+  "estado": "True",  // TRUE - FALSE //
+  "cliente": {
+    "clienteId": 3,
+    "nombre": "Juan Osorio"
+  }
+}
+
+{
+  "numeroCuenta": "496825",
+  "tipoCuenta": "AHORRO", // AHORRO - CORRIENTE //
+  "saldoInicial": 540,
+  "estado": "True",  // TRUE - FALSE //
+  "cliente": {
+    "clienteId": 2,
+    "nombre": "Marianela Montalvo"
+  }
+}
+
+3. Crear una nueva cuenta corriente para Jose Lema
+{
+  "numeroCuenta": "585545",
+  "tipoCuenta": "CORRIENTE", // AHORRO - CORRIENTE //
+  "saldoInicial": 1000,
+  "estado": "True",  // TRUE - FALSE //
+  "cliente": {
+    "clienteId": 1,
+    "nombre": "Jose Lema"
+  }
+}
+
+4. Realizar los siguientes movimientos
+{
+    "numeroCuenta": "478758",
+    "valor": -575
+}
+{
+    "numeroCuenta": "225487",
+    "valor": 600
+}
+{
+    "numeroCuenta": "495878",
+    "valor": 150
+}
+{
+    "numeroCuenta": "496825",
+    "valor": -540
+}
+
+5. Listado de movimientos por fechas y usuarios
+   GET {ms-cuenta-movimiento}/movimientos/cliente/:{clienteId}?fechaInicial=16/01/2024&fechaFin=16/01/2024
+   Ejemplo del test {ms-cuenta-movimiento}/movimientos/cliente/2?fechaInicial=10/01/2024&fechaFin=17/01/2024
+   
+   Consideraciones
+   - Si se desea consultar solo 1 fecha se puede omitir el RequestParam fechaFin
+   - Las fechas no pueden ser superior a la fecha del dia en curso
+   - La fechaInicial no puede ser mayor a la fecha fechaFin
+   
+===================================================================================================
+F1: CRUD
+  /cuentas
+  /movimientos
+  /clientes
+F2: Registro de movimeintos
+  - Positivos (deposito) , Negativos (retiro)
+  - Actualizacion de saldo en cuenta
+  - Registro de transacciones (Movimientos)
+F3: Registro de movimiento, saldo no disponible
+  - Defina mejor forma de capturar y manejar las excepciones
+F4: Reporte de de estado de cuentas
+  - Respuesta en formato json
+  - Segun el ejemplo indicado
+F5: Pruebas Unitarias (implementar 1 prueba para la entidad de dominio Cliente)
+  - Se han implentados varias pruebas unitarias, tanto en el ms de cliente como en el ms cuenta movimiento
+F6: Pruebas de integracion
+  - Implementada con @SpringBootTest y mediante postman
+F7: Despliegue de soluciones en contenedores
+  - Se hace entrega de un docker-compose.yml con los servicios necesarios para ejecutar el aplicativo
+6. Pruebas 
+  - Pruebas unitarias realizadas con Mokito y jUnit
+  - Test de integracion con @SpringBootTest / Postman
+  

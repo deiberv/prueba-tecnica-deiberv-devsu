@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "70afe12c-3f47-4e44-9ea8-4293fb139fe0",
+		"name": "ms-cuenta-movimiento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8265574"
+	},
+	"item": [
+		{
+			"name": "cuentas",
+			"item": [
+				{
+					"name": "Crear cuenta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroCuenta\": \"585545\",\r\n  \"tipoCuenta\": \"CORRIENTE\", // AHORRO - CORRIENTE //\r\n  \"saldoInicial\": 1000,\r\n  \"estado\": \"True\",  // TRUE - FALSE //\r\n  \"cliente\": {\r\n    \"clienteId\": 1,\r\n    \"nombre\": \"Jose Lema\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/cuentas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listado de cuentas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/cuentas",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Detalle Cuenta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/cuentas/detalle/585545",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cuentas",
+								"detalle",
+								"585545"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Cuenta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"numeroCuenta\": \"478758\",\r\n  \"tipoCuenta\": \"CORRIENTE\",\r\n  \"saldoInicial\": 50000,\r\n  \"estado\": \"ACTIVO\",\r\n  \"cliente\": {\r\n    \"clienteId\": 1,\r\n    \"nombre\": \"Deiber Velandria\"\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/cuentas/478758",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"cuentas",
+								"478758"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "movimientos",
+			"item": [
+				{
+					"name": "Registrar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"numeroCuenta\": \"496825\",\r\n    \"valor\": -540\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/movimientos",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reporte",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/movimientos/cliente/:{clienteId}?fechaInicial=17/01/2024",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"movimientos",
+								"cliente",
+								":{clienteId}"
+							],
+							"query": [
+								{
+									"key": "fechaInicial",
+									"value": "17/01/2024"
+								},
+								{
+									"key": "fechaFin",
+									"value": "16/01/2024",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "{clienteId}",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:8082",
+			"type": "string"
+		}
+	]
+}
