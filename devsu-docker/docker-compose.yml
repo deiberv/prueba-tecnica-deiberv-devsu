@@ -48,12 +48,36 @@ services:
       - mysql
     networks:
       - devsu-network
+
+  ms-eureka-server:
+    build:
+      context: ./ms-eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - devsu-network
+
+  ms-api-gateway:
+    build:
+      context: ./ms-api-gateway
+    depends_on:
+      - ms-eureka-server
+      - ms-cliente-persona
+      - ms-cuenta-movimiento
+    environment:
+      EUREKA_SERVER: http://ms-eureka-server:8761/eureka
+    ports:
+      - "9090:9090"
+    networks:
+      - devsu-network
+
   ms-cliente-persona:
     build:
       context: ./ms-cliente-persona
     depends_on:
       - mysql
       - rabbitmq
+      - ms-eureka-server
     container_name: ms-cliente-persona
     environment:
       MYSQL_SERVER_IP: mysql
@@ -64,6 +88,7 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
+      EUREKA_SERVER: http://ms-eureka-server:8761/eureka
     ports:
       - "8081:8081"
     restart: always
@@ -72,12 +97,14 @@ services:
       - rabbitmq
     networks:
       - devsu-network
+
   ms-cuenta-movimiento:
     build:
       context: ./ms-cuenta-movimiento
     depends_on:
       - mysql
       - rabbitmq
+      - ms-eureka-server
     container_name: ms-cuenta-movimiento
     environment:
       MYSQL_SERVER_IP: mysql
@@ -89,6 +116,7 @@ services:
       RABBITMQ_USER: guest
       RABBITMQ_PASSWORD: guest
       REST_CLIENTE_URL: http://ms-cliente-persona:8001/clientes
+      EUREKA_SERVER: http://ms-eureka-server:8761/eureka
     ports:
       - "8082:8082"
     restart: always
